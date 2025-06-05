@@ -5,6 +5,9 @@ from openai import OpenAI
 
 
 
+
+
+
 st.set_page_config(
     page_title="Physics TutorBot",
     page_icon="🧪",
@@ -100,6 +103,22 @@ elif sections == "Free-body Diagram Tutoring":
      #freebody diagram questions
     st.write("-----------")
     st.subheader("Got any Free Body Diagram issues? Allow us to assist you")
+    user = OpenAI(api_key=st.secrets["api_keys"]["openai_key"])
+    chat_input = st.chat_input("Don't know what forces are required? Ask!")
+    if chat_input:
+        response_1 = user.chat.completions.create(
+            model = 'gpt-4o',
+            messages=[{"role":"user", "content": "What forces are required for this problem:" +chat_input+"Please only state the forces and nothing else. Do not mention the reasoning as well, please state the forces in one string, like a list"}] #sends the forces needed so user to adjust which forces are needed
+        )
+        st.write(response_1["choices"][0]["message"]["content"])
+        response_list = response_1["choices"][0]["message"]["content"]
+    example_forces = ["Tension", "Gravity"]
+    for force in response_list:
+        for f_1 in example_forces:
+            if f_1 == force:
+                st.write("force")
+
+#add a checkbox with each force, then the slider appers. once they add the force generaet arrow from the ball showing the force
 
 elif sections == "Learning Resources":
      #learning resources
@@ -107,7 +126,7 @@ elif sections == "Learning Resources":
     st.subheader("Don't know where to start? Click here! Learning Resources for your guidance")
 
 #my quizes (personal quizes for given topic)
-elif sections == "My Quizzes":
+elif sections == "Personal Quizzes":
     st.write("-------------")
     st.subheader("Want some practice? Here's your go to place!")
 

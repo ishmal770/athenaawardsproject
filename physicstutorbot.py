@@ -4,23 +4,76 @@ import openai
 from openai import OpenAI 
 import turtle
 from PIL import Image
-def draw_FBD():
+import time
+from openai import RateLimitError
+
+def draw_Forcearrow(force): #drawign first the square then the arrow
     screen = turtle.Screen()
     screen.setup(width = 500, height=500)
     screen.bgcolor("white")
     t = turtle.Turtle()
     t.speed(3)
     t.color("blue")
+    t.goto(50,50)
     for dihhhh in range(4):
         t.forward(100)
         
         t.right(90)
-    ts = t.getscreen()
-    ts.getcanvas().postscript(file="drawing.eps") 
-    img = Image.open("drawing.eps")
-    img.save("drawing.png")
-    
+    t=turtle.Turtle() 
+    initlizae()
+    if force == "Friction":
+        t.backward(150)
+        
+        t.right(135)  # Rotate for arrowhead
+        t.forward(20)  # First part of arrowhead
+        t.backward(20)  # Return to line
+        t.left(90)  # Rotate for second part
+        t.forward(20)
+        
+        t.goto(50, 50)
+    if force == "Applied Force":
+        t.forward(150)
+        
+        t.right(135)  # Rotate for arrowhead
+        t.forward(20)  # First part of arrowhead
+        t.backward(20)  # Return to line
+        t.left(90)  # Rotate for second part
+        t.forward(20)
+        
+        t.goto(50, 50)
+    if force == "Normal Force" or force == "Air Resistance" or force == "Tension":
+        t.left(90)
+        t.forward(150)
+        
+        t.right(135)  # Rotate for arrowhead
+        t.forward(20)  # First part of arrowhead
+        t.backward(20)  # Return to line
+        t.left(90)  # Rotate for second part
+        t.forward(20)
+        
+        t.goto(50, 50)
+    if force == "Gravity":
+        t.right(90)
+        t.right(135)  # Rotate for arrowhead
+        t.forward(20)  # First part of arrowhead
+        t.backward(20)  # Return to line
+        t.left(90)  # Rotate for second part
+        t.forward(20)
+        
+        t.goto(50, 50)
+    return t
+def initlizae(): #sets turtle to the middle of the square
+    t = turtle.Turtle()
+    t.goto(50, 50)
+    return t
 
+def save_turtle_image():
+    
+    ts = turtle.getscreen()
+    ts.getcanvas().postscript(file="forces_diagram.eps")
+    img = Image.open("forces_diagram.eps")
+    img.save("forces_diagram.png")
+    turtle.done()
 
 
 
@@ -69,13 +122,13 @@ with right_col:
 
 
 
-
+user = OpenAI(api_key=st.secrets["api_keys"]["openai_key"])
 if sections == "Physics Tutoring":
     #basic chatbot
     st.write("--------")
     st.subheader("Ask your issues! :tada:")
     
-    user = OpenAI(api_key=st.secrets["api_keys"]["openai_key"])
+    
     if "openai_model" not in st.session_state:
         st.session_state["openai_model"] = "gpt-4o-mini"
     if "messages" not in st.session_state:
@@ -88,6 +141,7 @@ if sections == "Physics Tutoring":
         with st.chat_message("user"):
             st.markdown(prompt)
         with st.chat_message("assistant"):
+                time.sleep(2)  # Wait for 2 seconds before making a new API call
                 stream = user.chat.completions.create(
                 model=st.session_state["openai_model"],
                 messages=[{"role": "user", "content": prompt}],
@@ -105,6 +159,7 @@ if sections == "Physics Tutoring":
             with st.chat_message("user"):
                 st.markdown(prompt)
             with st.chat_message("assistant"):
+                time.sleep(2)  # Wait for 2 seconds before making a new API call
                 stream = user.chat.completions.create(
                 model=st.session_state["openai_model"],
                 messages=[{"role": "user", "content": prompt}],
@@ -121,23 +176,30 @@ elif sections == "Free-body Diagram Tutoring":
      #freebody diagram questions
     st.write("-----------")
     st.subheader("Got any Free Body Diagram issues? Allow us to assist you")
-    user = OpenAI(api_key=st.secrets["api_keys"]["openai_key"])
+    
     chat_input = st.chat_input("Don't know what forces are required? Ask!")
-    if chat_input:
-        response_1 = user.chat.completions.create(
-            model = 'gpt-4o',
-            messages=[{"role":"user", "content": "What forces are required for this problem:" +chat_input+"Please only state the forces and nothing else. Do not mention the reasoning as well, please state the forces in one string, like a list"}] #sends the forces needed so user to adjust which forces are needed
-        )
-        st.write(response_1["choices"][0]["message"]["content"])
-        response_list = response_1["choices"][0]["message"]["content"]
-    example_forces = ["Tension", "Gravity"]
-    for force in response_list:
-        for f_1 in example_forces:
-            if f_1 == force:
-                st.write("force")
-    if st.button("Draw & Display"):
-        draw_FBD()
-    st.image("drawing.png", caption="Turtle Drawing", use_column_width=True)
+    response_list=[]
+    try:
+        if chat_input:
+            time.sleep(2)  # Wait for 2 seconds before making a new API call
+            response_1 = user.chat.completions.create(
+                model = 'gpt-4o',
+                messages=[{"role":"user", "content": "What forces are required for this problem:" +chat_input+"Please only state the forces and nothing else. Do not mention the reasoning as well, please state the forces in a list format"}] #sends the forces needed so user to adjust which forces are needed
+            )
+            st.write(response_1["choices"][0]["message"]["content"])
+            response_list = list(response_1["choices"][0]["message"]["content"].split(", "))
+        example_forces = ["Tension", "Gravity", "Friction", "Applied Force", "Normal Force", "Air Resistance"]
+        if len(response_list)>0:
+            for force in response_list:
+                for f_1 in example_forces:
+                    if f_1 == force:
+                        draw_Forcearrow(f_1)
+            if st.button("Draw & Display"):
+                st.image("forces_diagram.png")
+                
+            st.image("drawing.png", caption="Turtle Drawing", use_column_width=True)
+    except RateLimitError as e:
+        st.write("Rate limit exceeded.Please check your usage or upgrade your plan")
 
 
 #with the list of forces, if each force cheks with one of these, draw the forces then expoert them
@@ -146,15 +208,22 @@ elif sections == "Learning Resources":
      #learning resources
     st.write("-------------")
     st.subheader("Don't know where to start? Click here! Learning Resources for your guidance")
+    
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.write("Cheat Sheets")
+        physicstopics = st.selectbox("Choose a topic:" ["Forces", "Newton's First Laws", "Momentum", "Free-body Diagrams", "Kinematics"])
+    with col2:
+        st.write("Worksheets on Provided Topics")
+        physicstopics = st.selectbox("Choose a topic:" ["Forces", "Newton's First Laws", "Momentum", "Free-body Diagrams", "Kinematics"])
+    with col3:
+        st.write("Learn more!")
 
 #my quizes (personal quizes for given topic)
 elif sections == "Personal Quizzes":
     st.write("-------------")
-    st.subheader("Want some practice? Here's your go to place!")
+    st.subheader("Want some practiche? Here's your go to place!")
 
-elif sections == "My progress":
-    st.write("---------------")
-    st.subheader("Check out your progress!")
 #my progress
 
 

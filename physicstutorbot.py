@@ -208,16 +208,83 @@ elif sections == "Learning Resources":
      #learning resources
     st.write("-------------")
     st.subheader("Don't know where to start? Click here! Learning Resources for your guidance")
-    
+    physicstopics = st.selectbox("Choose a topic:", ["Newton's Laws", "Momentum", "Kinematics", "Work Energy and Power"])
+    option = st.selectbox(
+    "Select a difficulty level:",
+    ["Beginner", "Intermediate", "Advanced"],
+    index=1  #default is intermediate
+    )
+    st.write(f"You have chosen difficulty Level: {option}" + f"And topic: {physicstopics}")
+    resources= {
+        "Newton's Laws": {
+            "Beginnner":{
+                "cheatsheets": "[Newton's Laws](https://docs.google.com/document/d/1aMXKxg8wvjad8Mkp1bsozAD-v-7co1f7HhIEO_hI6X0/edit?usp=sharing)",
+                "worksheets": "[Newton's Laws](https://docs.google.com/document/d/1VGhDk3gPLV2ybv2oVoUXUuKnrv0tg_7SbvpbZNRM2Og/edit?usp=sharing)",
+                "learnmore":"[Newton's Laws](https://www.britannica.com/science/Newtons-laws-of-motion)"
+
+                #cheatsheets first
+                #worksheets second
+                #websites for learning third
+            },
+            "Intermediate":{
+                "cheatsheets":"[Newton's Laws](https://docs.google.com/document/d/1kvPoVHqKRtap8ElkgU0Aaz2vd_HpAtDu0IlFaOcsHyU/edit?usp=sharing)", #changed
+                "worksheets": "[Newton's Laws](https://docs.google.com/document/d/1pGWgZqkW5tQPelP7LVVhk_GyUEe82kBQTl5DHIFqj7g/edit?usp=sharing)", #changed
+                "learnmore":"[Newton's Laws](https://edu.gcfglobal.org/en/newtons-laws-of-motion/)" #changed
+
+            },
+            "Advanced": {
+                "cheatsheets":"[Newton's Laws](https://docs.google.com/document/d/15bF8z3eI_fwnlepEnGzdHGOcaCQ9KcjKjK--oJjGZvc/edit?usp=sharing)", #changed
+                "worksheets":"[Newton's Laws](https://docs.google.com/document/d/1J72wqBTOLD4EAzjrRoVZ0M6gYarIm1cxFD6hxT27RZY/edit?usp=sharing)", #changed
+                "learnmore":"[Newton's Laws](https://www.khanacademy.org/science/physics/forces-newtons-laws)" #changed
+
+
+            }
+        },
+        "Momentum": {
+            "Beginnner":{
+                "cheatsheets": "[Momentum](https://cheatography.com/goldennfluff/cheat-sheets/momentum-physics-12-unit-2)", #changed
+                "worksheets": "[Momentum](https://www.teacherspayteachers.com/Product/Momentum-Calculations-Classwork-Worksheet-beginner-friendly-11764257)", #changed
+                "learnmore":"[Momentum](https://momentum.org/)" #changed
+
+                #cheatsheets first
+                #worksheets second
+                #websites for learning third
+            },
+            "Intermediate":{
+                "cheatsheets":"[Momentum](https://physicstutorials.org/impulse-momentum/impulse-momentum-cheat-sheet)", #changed
+                "worksheets": "[Momentum](https://sfponline.org/Uploads/71/Momentum Worksheet.pdf)", #changed
+                "learnmore":"[Momentum](https://www.sciencefacts.net/momentum.html)" #changed
+
+            },
+            "Advanced": {
+                "cheatsheets":"[Momentum](https://flippingphysics.com/uploads/2/1/1/0/21103672/0198_lecture_notes_-_ap_physics_c-_momentum_impulse_collisions_and_center_of_mass_review__mechanics_.pdf)", #changed 
+                "worksheets":"[Momentum](https://studylib.net/doc/8947608/momentum-worksheet)", #changed
+                "learnmore":"[Momentum](https://phet.colorado.edu/)" #changed
+
+
+            }
+        },
+    }
+        
+        
+        
+        
+        
+        
+        
+        #all the resources for each topic and the difficulty
+    selected_Course = selected_resources = resources.get(physicstopics, {}).get(option, {})
+
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.write("Cheat Sheets")
-        physicstopics = st.selectbox("Choose a topic:" ["Forces", "Newton's First Laws", "Momentum", "Free-body Diagrams", "Kinematics"])
+        st.subheader("Cheat Sheets")
+        
     with col2:
-        st.write("Worksheets on Provided Topics")
-        physicstopics = st.selectbox("Choose a topic:" ["Forces", "Newton's First Laws", "Momentum", "Free-body Diagrams", "Kinematics"])
+        st.subheader("Worksheets on Provided Topics")
+        
+
     with col3:
-        st.write("Learn more!")
+        st.subheader("Learn more!")
 
 #my quizes (personal quizes for given topic)
 elif sections == "Personal Quizzes":

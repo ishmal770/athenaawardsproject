@@ -264,6 +264,30 @@ elif sections == "Learning Resources":
 
             }
         },
+        "Kinematics": {
+            "Beginnner":{
+                "cheatsheets": "[Kinematics](https://physicstutorials.org/mechanics/kinematics/kinematics-cheatsheet)", #changed
+                "worksheets": "[Kinematics](https://scribd.com/document/535863807/WORKSHEET-1-KINEMATICS)", #changed
+                "learnmore":"[Kinematics](https://www.physicsclassroom.com/class/1DKin/Lesson-1/Introduction)" #changed
+
+                #cheatsheets first
+                #worksheets second
+                #websites for learning third
+            },
+            "Intermediate":{
+                "cheatsheets":"[Kinematics](https://courses.physics.illinois.edu/phys211/sp2020/practice/formula-sheet.pdf)", #changed
+                "worksheets": "[Kinematics](https://owhentheyanks.com/kinematics-worksheet-with-answers)", #changed
+                "learnmore":"[Kinematics](https://www.coursera.org/courses?query=kinematics)" #changed
+
+            },
+            "Advanced": {
+                "cheatsheets":"[Kinematics](https://acejee.com/blog/kinematics-notes-jee-main-jee-advanced)",  #changed
+                "worksheets":"[Kinematics](https://physexams.com/Pdf-files/Kinematics Practice Problems in Physics.pdf)", #changed
+                "learnmore":"[Kinematics](https://www.khanacademy.org/)" #changed
+
+
+            }
+        },
     }
         
         
@@ -278,13 +302,19 @@ elif sections == "Learning Resources":
     col1, col2, col3 = st.columns(3)
     with col1:
         st.subheader("Cheat Sheets")
+        for sheet in selected_Course.get("cheatsheets", []):
+            st.markdown(sheet, unsafe_allow_html=True)
         
     with col2:
         st.subheader("Worksheets on Provided Topics")
+        for sheet in selected_Course.get("worksheets", []):
+            st.markdown(sheet, unsafe_allow_html=True)
         
 
     with col3:
         st.subheader("Learn more!")
+        for sheet in selected_Course.get("learnmore", []):
+            st.markdown(sheet, unsafe_allow_html=True)
 
 #my quizes (personal quizes for given topic)
 elif sections == "Personal Quizzes":

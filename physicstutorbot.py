@@ -214,10 +214,13 @@ elif sections == "Learning Resources":
     ["Beginner", "Intermediate", "Advanced"],
     index=1  #default is intermediate
     )
-    st.write(f"You have chosen difficulty Level: {option}" + f"And topic: {physicstopics}")
+    st.write(f"You have chosen:")
+    st.write(f"- Topic: {physicstopics}")
+    st.write(f"- Difficulty Level: {option}")
+
     resources= {
         "Newton's Laws": {
-            "Beginnner":{
+            "Beginner":{
                 "cheatsheets": "[Newton's Laws](https://docs.google.com/document/d/1aMXKxg8wvjad8Mkp1bsozAD-v-7co1f7HhIEO_hI6X0/edit?usp=sharing)",
                 "worksheets": "[Newton's Laws](https://docs.google.com/document/d/1VGhDk3gPLV2ybv2oVoUXUuKnrv0tg_7SbvpbZNRM2Og/edit?usp=sharing)",
                 "learnmore":"[Newton's Laws](https://www.britannica.com/science/Newtons-laws-of-motion)"
@@ -241,7 +244,7 @@ elif sections == "Learning Resources":
             }
         },
         "Momentum": {
-            "Beginnner":{
+            "Beginner":{
                 "cheatsheets": "[Momentum](https://cheatography.com/goldennfluff/cheat-sheets/momentum-physics-12-unit-2)", #changed
                 "worksheets": "[Momentum](https://www.teacherspayteachers.com/Product/Momentum-Calculations-Classwork-Worksheet-beginner-friendly-11764257)", #changed
                 "learnmore":"[Momentum](https://momentum.org/)" #changed
@@ -265,7 +268,7 @@ elif sections == "Learning Resources":
             }
         },
         "Kinematics": {
-            "Beginnner":{
+            "Beginner":{
                 "cheatsheets": "[Kinematics](https://physicstutorials.org/mechanics/kinematics/kinematics-cheatsheet)", #changed
                 "worksheets": "[Kinematics](https://scribd.com/document/535863807/WORKSHEET-1-KINEMATICS)", #changed
                 "learnmore":"[Kinematics](https://www.physicsclassroom.com/class/1DKin/Lesson-1/Introduction)" #changed
@@ -297,24 +300,47 @@ elif sections == "Learning Resources":
         
         
         #all the resources for each topic and the difficulty
-    selected_Course = selected_resources = resources.get(physicstopics, {}).get(option, {})
+    selected_Course = resources.get(physicstopics, {}).get(option, {})
 
     col1, col2, col3 = st.columns(3)
     with col1:
         st.subheader("Cheat Sheets")
-        for sheet in selected_Course.get("cheatsheets", []):
-            st.markdown(sheet, unsafe_allow_html=True)
+        
+        
+
+        
+        cheatsheet_url = selected_Course.get("cheatsheets", None)
+
+        if cheatsheet_url:
+            st.markdown(cheatsheet_url, unsafe_allow_html=True)
+            
+        else:
+            st.write("No cheat sheets available.")
+
+
         
     with col2:
         st.subheader("Worksheets on Provided Topics")
-        for sheet in selected_Course.get("worksheets", []):
-            st.markdown(sheet, unsafe_allow_html=True)
+        
+        worksheets_url = selected_Course.get("worksheets", None)
+        if worksheets_url:
+            st.markdown(worksheets_url, unsafe_allow_html=True)
+            
+        else:
+            st.write("No worksheets available.")
+
         
 
     with col3:
         st.subheader("Learn more!")
-        for sheet in selected_Course.get("learnmore", []):
-            st.markdown(sheet, unsafe_allow_html=True)
+        
+        learnmore_url = selected_Course.get("learnmore", None)
+        if learnmore_url:
+            st.markdown(learnmore_url, unsafe_allow_html=True)
+            
+        else:
+            st.write("No additional learning resources available.")
+
 
 #my quizes (personal quizes for given topic)
 elif sections == "Personal Quizzes":

@@ -221,76 +221,100 @@ elif sections == "Learning Resources":
     resources= {
         "Newton's Laws": {
             "Beginner":{
-                "cheatsheets": "[Newton's Laws](https://docs.google.com/document/d/1aMXKxg8wvjad8Mkp1bsozAD-v-7co1f7HhIEO_hI6X0/edit?usp=sharing)",
-                "worksheets": "[Newton's Laws](https://docs.google.com/document/d/1VGhDk3gPLV2ybv2oVoUXUuKnrv0tg_7SbvpbZNRM2Og/edit?usp=sharing)",
-                "learnmore":"[Newton's Laws](https://www.britannica.com/science/Newtons-laws-of-motion)"
+                "cheatsheets": "[Newton's Laws Beginner CheatSheets](https://docs.google.com/document/d/1aMXKxg8wvjad8Mkp1bsozAD-v-7co1f7HhIEO_hI6X0/edit?usp=sharing)",
+                "worksheets": "[Newton's Laws Beginner  Worksheets](https://docs.google.com/document/d/1VGhDk3gPLV2ybv2oVoUXUuKnrv0tg_7SbvpbZNRM2Og/edit?usp=sharing)",
+                "learnmore":"[Newton's Laws Beginner  Resources](https://www.britannica.com/science/Newtons-laws-of-motion)"
 
                 #cheatsheets first
                 #worksheets second
                 #websites for learning third
             },
             "Intermediate":{
-                "cheatsheets":"[Newton's Laws](https://docs.google.com/document/d/1kvPoVHqKRtap8ElkgU0Aaz2vd_HpAtDu0IlFaOcsHyU/edit?usp=sharing)", #changed
-                "worksheets": "[Newton's Laws](https://docs.google.com/document/d/1pGWgZqkW5tQPelP7LVVhk_GyUEe82kBQTl5DHIFqj7g/edit?usp=sharing)", #changed
-                "learnmore":"[Newton's Laws](https://edu.gcfglobal.org/en/newtons-laws-of-motion/)" #changed
+                "cheatsheets":"[Newton's Laws Intermediate CheatSheets](https://docs.google.com/document/d/1kvPoVHqKRtap8ElkgU0Aaz2vd_HpAtDu0IlFaOcsHyU/edit?usp=sharing)", #changed
+                "worksheets": "[Newton's Laws Intermediate Worksheets](https://docs.google.com/document/d/1pGWgZqkW5tQPelP7LVVhk_GyUEe82kBQTl5DHIFqj7g/edit?usp=sharing)", #changed
+                "learnmore":"[Newton's Laws Intermediate Resources](https://edu.gcfglobal.org/en/newtons-laws-of-motion/)" #changed
 
             },
             "Advanced": {
-                "cheatsheets":"[Newton's Laws](https://docs.google.com/document/d/15bF8z3eI_fwnlepEnGzdHGOcaCQ9KcjKjK--oJjGZvc/edit?usp=sharing)", #changed
-                "worksheets":"[Newton's Laws](https://docs.google.com/document/d/1J72wqBTOLD4EAzjrRoVZ0M6gYarIm1cxFD6hxT27RZY/edit?usp=sharing)", #changed
-                "learnmore":"[Newton's Laws](https://www.khanacademy.org/science/physics/forces-newtons-laws)" #changed
+                "cheatsheets":"[Newton's Laws Advanced CheatSheets](https://docs.google.com/document/d/15bF8z3eI_fwnlepEnGzdHGOcaCQ9KcjKjK--oJjGZvc/edit?usp=sharing)", #changed
+                "worksheets":"[Newton's Laws Advanced Worksheets](https://docs.google.com/document/d/1J72wqBTOLD4EAzjrRoVZ0M6gYarIm1cxFD6hxT27RZY/edit?usp=sharing)", #changed
+                "learnmore":"[Newton's Laws Advanced Resources](https://www.khanacademy.org/science/physics/forces-newtons-laws)" #changed
 
 
             }
         },
         "Momentum": {
             "Beginner":{
-                "cheatsheets": "[Momentum](https://cheatography.com/goldennfluff/cheat-sheets/momentum-physics-12-unit-2)", #changed
-                "worksheets": "[Momentum](https://www.teacherspayteachers.com/Product/Momentum-Calculations-Classwork-Worksheet-beginner-friendly-11764257)", #changed
-                "learnmore":"[Momentum](https://momentum.org/)" #changed
+                "cheatsheets": "[Momentum Beginner  CheatSheets](https://cheatography.com/goldennfluff/cheat-sheets/momentum-physics-12-unit-2)", #changed
+                "worksheets": "[Momentum Beginner  Worksheets](https://www.teacherspayteachers.com/Product/Momentum-Calculations-Classwork-Worksheet-beginner-friendly-11764257)", #changed
+                "learnmore":"[Momentum  Beginner Resources](https://momentum.org/)" #changed
 
                 #cheatsheets first
                 #worksheets second
                 #websites for learning third
             },
             "Intermediate":{
-                "cheatsheets":"[Momentum](https://physicstutorials.org/impulse-momentum/impulse-momentum-cheat-sheet)", #changed
-                "worksheets": "[Momentum](https://sfponline.org/Uploads/71/Momentum Worksheet.pdf)", #changed
-                "learnmore":"[Momentum](https://www.sciencefacts.net/momentum.html)" #changed
+                "cheatsheets":"[Momentum  Intermediate CheatSheets](https://physicstutorials.org/impulse-momentum/impulse-momentum-cheat-sheet)", #changed
+                "worksheets": "[Momentum  Intermediate Worksheets](https://sfponline.org/Uploads/71/Momentum Worksheet.pdf)", #changed
+                "learnmore":"[Momentum  Intermediate Resources](https://www.sciencefacts.net/momentum.html)" #changed
 
             },
             "Advanced": {
-                "cheatsheets":"[Momentum](https://flippingphysics.com/uploads/2/1/1/0/21103672/0198_lecture_notes_-_ap_physics_c-_momentum_impulse_collisions_and_center_of_mass_review__mechanics_.pdf)", #changed 
-                "worksheets":"[Momentum](https://studylib.net/doc/8947608/momentum-worksheet)", #changed
-                "learnmore":"[Momentum](https://phet.colorado.edu/)" #changed
+                "cheatsheets":"[Momentum Advanced CheatSheets](https://flippingphysics.com/uploads/2/1/1/0/21103672/0198_lecture_notes_-_ap_physics_c-_momentum_impulse_collisions_and_center_of_mass_review__mechanics_.pdf)", #changed 
+                "worksheets":"[Momentum Advanced Worksheets](https://studylib.net/doc/8947608/momentum-worksheet)", #changed
+                "learnmore":"[Momentum Advanced Resources](https://phet.colorado.edu/)" #changed
 
 
             }
         },
         "Kinematics": {
             "Beginner":{
-                "cheatsheets": "[Kinematics](https://physicstutorials.org/mechanics/kinematics/kinematics-cheatsheet)", #changed
-                "worksheets": "[Kinematics](https://scribd.com/document/535863807/WORKSHEET-1-KINEMATICS)", #changed
-                "learnmore":"[Kinematics](https://www.physicsclassroom.com/class/1DKin/Lesson-1/Introduction)" #changed
+                "cheatsheets": "[Kinematics Beginner  CheatSheets](https://physicstutorials.org/mechanics/kinematics/kinematics-cheatsheet)", #changed
+                "worksheets": "[Kinematics Beginner  Worksheets](https://scribd.com/document/535863807/WORKSHEET-1-KINEMATICS)", #changed
+                "learnmore":"[Kinematics  Beginner Resources](https://www.physicsclassroom.com/class/1DKin/Lesson-1/Introduction)" #changed
 
                 #cheatsheets first
                 #worksheets second
                 #websites for learning third
             },
             "Intermediate":{
-                "cheatsheets":"[Kinematics](https://courses.physics.illinois.edu/phys211/sp2020/practice/formula-sheet.pdf)", #changed
-                "worksheets": "[Kinematics](https://owhentheyanks.com/kinematics-worksheet-with-answers)", #changed
-                "learnmore":"[Kinematics](https://www.coursera.org/courses?query=kinematics)" #changed
+                "cheatsheets":"[Kinematics Intermediate CheatSheets](https://courses.physics.illinois.edu/phys211/sp2020/practice/formula-sheet.pdf)", #changed
+                "worksheets": "[Kinematics Intermediate Worksheets](https://owhentheyanks.com/kinematics-worksheet-with-answers)", #changed
+                "learnmore":"[Kinematics Intermediate Resources](https://www.coursera.org/courses?query=kinematics)" #changed
 
             },
             "Advanced": {
-                "cheatsheets":"[Kinematics](https://acejee.com/blog/kinematics-notes-jee-main-jee-advanced)",  #changed
-                "worksheets":"[Kinematics](https://physexams.com/Pdf-files/Kinematics Practice Problems in Physics.pdf)", #changed
-                "learnmore":"[Kinematics](https://www.khanacademy.org/)" #changed
+                "cheatsheets":"[Kinematics Advanced CheatSheets](https://acejee.com/blog/kinematics-notes-jee-main-jee-advanced)",  #changed
+                "worksheets":"[Kinematics Advanced Worksheets](https://physexams.com/Pdf-files/Kinematics)", #changed
+                "learnmore":"[Kinematics Advanced Resources](https://www.khanacademy.org/)" #changed
 
 
             }
         },
+        "Work Energy and Power": {
+            "Beginner":{
+                "cheatsheets": "[Work Energy and Power Beginner  CheatSheets](https://worksheeto.com/post_physics-work-energy-and-power-worksheet_247580)", #changed
+                "worksheets": "[Work Energy and Power Beginner  Worksheets](https://www.physicsclassroom.com/getattachment/Teacher-Toolkits/Work-Energy-Fundamentals/Work-Energy-Fundamentals-PDF-Version/WorkEnergy1.pdf?ext=.pdf)", #changed 
+                "learnmore":"[Work Energy and Power  Beginner Resources](https://www.physicsclassroom.com/CLASS/energy)" #changed
+
+                #cheatsheets first
+                #worksheets second
+                #websites for learning third
+            },
+            "Intermediate":{
+                "cheatsheets":"[Work Energy and Power Intermediate CheatSheets](https://www.physicstutorials.org/energy-work-power/work-power-energy-cheat-sheet/)", #changed
+                "worksheets": "[Work Energy and Power Intermediate Worksheets](https://lessondberoticised.z22.web.core.windows.net/work-energy-and-power-worksheet.html)", #changed 
+                "learnmore":"[Work Energy and Power Intermediate Resources](https://www.need.org/need-students/energy-infobooks/)" #changed 
+
+            },
+            "Advanced": {
+                "cheatsheets":"[Work Energy and Power Advanced CheatSheets](https://classoraclemedia.com/uploads/4/2/3/1/42314577/phbcs07workpowerenergy-141009145603-conversion-gate01.pdf)",  
+                "worksheets":"[Work Energy and Power Advanced Worksheets](https://www.physicsclassroom.com/calcpad/energy)", 
+                "learnmore":"[Work Energy and Power Advanced Resources](https://phys.libretexts.org/Bookshelves/College_Physics/College_Physics_1e_%28OpenStax%29/07%3A_Work_Energy_and_Energy_Resources)" 
+
+
+            }
+        }
     }
         
         
@@ -345,7 +369,69 @@ elif sections == "Learning Resources":
 #my quizes (personal quizes for given topic)
 elif sections == "Personal Quizzes":
     st.write("-------------")
-    st.subheader("Want some practiche? Here's your go to place!")
+    st.subheader("Want some practice? Here's your go to place!")
+    list_ofchoices = ["Newton's Laws", "Momentum", "Kinematics", "Work Energy and Power"]
+    topic = st.selectbox("Choose a topic:", list(list_ofchoices))
+    quiz_questions = {
+        "Newton's Laws": {
+            
+            {"question": "What is Newton's First Law also known as?", "options": ["Law of Gravity", "Law of Inertia", "Law of Motion"], "answer": "Law of Inertia"},
+            {"question": "Which force keeps planets in orbit?", "options": ["Friction", "Gravity", "Magnetism"], "answer": "Gravity"},
+            
+            
+            {"question": "What is the equation for Newton's Second Law?", "options": ["F = ma", "P = mv", "E = mc²"], "answer": "F = ma"},
+            
+            
+            {"question": "In a frictionless environment, an object in motion will…?", "options": ["Stop", "Continue moving", "Change direction"], "answer": "Continue moving"},
+            {"question": "A 10kg object accelerates at 4 m/s^2. What's the net force?", "options": ["30", "55", "45", "40"], "answer": "40"},
+            {"question": "A 50 N forces pushes a 5 kg box. What's its acceleration", "options": ["10", "15", "6", "3.3"], "answer": "10"},
+            {"question": "A 1000 kg car accelerates from 0 to 20 m/s in 5 s. What's the net force?", "options": ["4000", "2500", "1500", "1000"], "answer": "4000"},
+            {"question": "A 5kg object's velocity changes from 10 m/s to 4 m/s in 2s. Whats the Net Force", "options": ["30", "15", "45", "40"], "answer": "15"},
+            {"question": "A 60 kg skydiver falls with 400 N of air resistance. What's acceleration?", "options": ["0.312", "20.2", "99", "34"], "answer": "20.2"},
+            {"question": "A 30 kg child on a sled experiences 60 N of friction. If pulled with 100 N, what's a?", "options": ["4/3", "2/3", "1/5", "0"], "answer": "4/3"},
+            {"question": "A 500 N net force stops a 100 kg object from moving at 10 m/s. How long does it take?", "options": ["3", "55", "2", "44"], "answer": "2"},
+            
+        },
+        "Momentum": {
+            
+            {"question": "A 5 kg cat runs at 8 m/s. What its momentum?", "options": ["40", "35", "23"], "answer": "40"}, #changed
+            {"question": "A 0.2 kg baseball has a momentum of 6 kg*m/s. What's its velocity", "options": ["30", "15", "45"], "answer": "30"}, #changed
+            
+            
+            {"question": "A 1200 kg car moves at 25 m/s. What's its momentum?", "options": ["12,578", "25,000", "30,000"], "answer": "30,000"}, #changed
+            
+            
+            {"question": "A 60 kg sprinter has a momentum of 720*kg*m/s. What's her speed?", "options": ["1", "2", "5"], "answer": "2"}, #changed
+            {"question": "A 0.02 kg bullet travels at 400 m/s. What's its momentum?", "options": ["30", "80", "45", "40"], "answer": "80"}, #changed
+            {"question": "A 90 kg hockey player skates at 10 m/s. What's its momentum?", "options": ["6", "5", "2", "3.3"], "answer": "6"}, #changed
+            {"question": "A 1500 kg truck's momentum is 45,000 kg*m/s. What's its momentum", "options": ["900", "2500", "1500", "1000"], "answer": "900"},#changed
+            {"question": "A 0.5 kg soccer ball is kicked to 12 m/s. What's its momentum?", "options": ["30", "6", "5", "4"], "answer": "6"}, #changed
+            {"question": "A 70 kg runner's momentum is 490 kg*m/s. What's her velocity?", "options": ["7", "20.2", "9", "4"], "answer": "7"}, #changed
+            {"question": "A 2 kg toy car moving at 3 m/s hits a 1 kg stationary car. If they stick, what's their final speed?", "options": ["4", "2", "1", "0"], "answer": "2"},
+            {"question": "A 50 kg archer shoots a 0.1 kg arrow at 50 m/s. What's the archer's recoil speed?", "options": ["0.3", "0.1", "2", "4.4"], "answer": "0.1"},
+            
+        },
+        "Kinematics": {
+            
+            {"question": "Which of the following is a vector quantity?", "options": ["Speed", "Distance", "Velocity"], "answer": "Velocity"}, #changed
+            {"question": "What does the slope of a velocity-time graph represent?", "options": ["Speed", "Acceleration", "45"], "answer": "Acceleration"}, #changed
+            
+            
+            {"question": " If an object moves with constant acceleration, its velocity vs. time graph is:", "options": ["A curved line", "A horizontal line", "A diagonal straight line"], "answer": "A diagonal straight line"}, #changed
+            
+            
+            {"question": " A car accelerates from rest at 4 m/s² for 5 seconds. What is its final velocity?", "options": ["1", "2", "5"], "answer": "20"}, #changed
+            {"question": "Which of the following statements is true about free-falling objects?", "options": ["They experience constant velocity", "They accelerate at 9.8 m/s² downward", "Their motion depends on their mass", "40"], "answer": "They accelerate at 9.8 m/s² downward"}, #changed 
+            {"question": "The area under a velocity-time graph represents:", "options": ["Acceleration", "Distance traveled", "2", "3.3"], "answer": "Distance traveled"}, #changed
+            {"question": "Which of the following equations is NOT a kinematics equation?", "options": ["( v = u + at )", "( F = ma )", "v2 + 2as", "1000"], "answer": " F = ma"},#changed
+            {"question": "A projectile is launched at an angle. Its horizontal acceleration is:", "options": ["9.8", "6", "5", "4"], "answer": "9.8"}, #changed
+            {"question": "A ball thrown straight up reaches its highest point. At that moment, its velocity is:?", "options": ["Maximum", "Zero", "Negative", "Constant"], "answer": "Zero"}, #changed
+            {"question": "If an object moves in uniform circular motion, its speed is:?", "options": ["Constant", "Increasing", "Decreasing", "0"], "answer": "Constant"},#changed
+            {"question": "What happens to the acceleration of an object in free fall when air resistance is considered?", "options": ["It stays the same", "0", "It decreases over time", "It increases over time"], "answer": "It decreases over time"},
+            
+        },
+    }
+
 
 #my progress
 

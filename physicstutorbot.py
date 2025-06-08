@@ -430,7 +430,68 @@ elif sections == "Personal Quizzes":
             {"question": "What happens to the acceleration of an object in free fall when air resistance is considered?", "options": ["It stays the same", "0", "It decreases over time", "It increases over time"], "answer": "It decreases over time"},
             
         },
+        "Work Energy and Power": {
+            
+            {"question": "What is the SI unit of work?", "options": ["Newton", "Joule", "Watt"], "answer": "Joule"}, #changed
+            {"question": "Which of the following is an example of kinetic energy?", "options": ["A stretched rubber band", "A moving car", "A compressed spring"], "answer": "A moving car"}, #changed
+            
+            
+            {"question": " What is the formula for work done when force is applied at an angle θ?", "options": ["( W = Fd )", "( W = Fd \cosθ )", "A diagonal straight line"], "answer": "( W = Fd \cosθ )"}, #changed
+            
+            
+            {"question": " Which of the following statements is true about power?", "options": ["Power is the rate at which work is done", "Power is measured in Joules", "Power depends only on force applied"], "answer": "Power is the rate at which work is done"}, #changed
+            {"question": "A machine does 500 Joules of work in 10 seconds. What is its power output?", "options": ["50 W", "5000 W", "5 W", "40 W"], "answer": "50 W"},  #changed
+            {"question": "What type of energy is stored in a stretched spring?", "options": ["Kinetic energy", "Thermal energy", "2", "3.3"], "answer": "Thermal energy"}, #changed
+            {"question": "Which of the following is an example of work being done?", "options": ["Holding a book in place", "Pushing a box across the floor", "v2 + 2as", "1000"], "answer": "Pushing a box across the floor"}, #changed
+            {"question": "If the velocity of an object is doubled, its kinetic energy will:", "options": ["Remain the same", "Double", "Quadruple", "4"], "answer": "Quadruple"}, #changed
+            {"question": "What is the work done when a force of 10 N moves an object 5 meters in the direction of the force?", "options": ["45", "50", "23", "Constant"], "answer": "50"}, #changed
+            {"question": "Which of the following is NOT a form of mechanical energy?", "options": ["Kinetic Energy", "Potential Energy", "Thermal Energy", "Elastic Energy"], "answer": "Thermal Energy"}, #changed
+            {"question": "A wind-powered generator converts wind energy into electrical energy. The electrical power output is proportional to:?", "options": ["Wind speed", "0", "Wind speed squared", "Wind speed cubed"], "answer": "Wind speed cubed"}, #changed
+            
+        },
     }
+    if "question_index" not in st.session_state:
+        st.session_state["question_index"] = 0
+    if "score" not in st.session_state:
+        st.session_state["score"] = 0
+
+    selected_questions = quiz_questions.get(topic, {})
+    progress = (st.session_state["question_index"] / len(selected_questions)) * 100
+    st.progress(progress / 100)
+
+    correct = 0
+    if st.button("Open quiz!"):
+        if st.session_state["question_index"]<len(selected_questions):
+            
+
+            if selected_questions:
+                current_question = selected_questions[st.session_state["question_index"]]
+
+            
+                st.subheader(f"Question {st.session_state['question_index'] + 1}: {current_question['question']}")
+                
+                
+                answer = st.radio("Choose your answer:", current_question["options"])
+
+                if st.button("Sumbit"):
+                    if answer == _["answer"]:
+                        st.success("Correct!")
+                        correct+=1
+                        progress = (st.session_state)["question_index"] / (len(selected_questions)) * 100
+                        st.progress(progress/100)
+
+                    else:
+                        st.error(f"Incorrect. The correct answer is {_['answer']}.")
+                    st.session_state["question_index"] += 1
+                    st.rerun()  # Refresh page to show the next question
+                    
+
+            else:
+                st.warning("No questions for this topic")
+    else:
+       st.success(f"🎉 Quiz Completed! Your final score: {st.session_state['score']} / {len(selected_questions)}")
+ 
+   
 
 
 #my progress

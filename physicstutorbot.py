@@ -15,7 +15,7 @@ def draw_Forcearrow(force): #drawign first the square then the arrow
     t.speed(3)
     t.color("blue")
     t.goto(50,50)
-    for dihhhh in range(4):
+    for o in range(4):
         t.forward(100)
         
         t.right(90)
@@ -115,7 +115,7 @@ with st.container(): #first section
 with right_col:
     st.sidebar.title("Navigation")
 
-    sections = st.sidebar.radio("Go to:", ["Physics Tutoring", "Free-body Diagram Tutoring", "Learning Resources", "Personal Quizzes", "My progress"])
+    sections = st.sidebar.radio("Go to:", ["Physics Tutoring", "Free-body Diagram Tutoring", "Learning Resources", "Personal Quizzes"])
 
     
 
@@ -176,31 +176,45 @@ elif sections == "Free-body Diagram Tutoring":
      #freebody diagram questions
     st.write("-----------")
     st.subheader("Got any Free Body Diagram issues? Allow us to assist you")
+    if "fbd_last_input" not in st.session_state:
+        st.session_state["fbd_last_input"] = ""
+    if "fbd_response" not in st.session_state:
+        st.session_state["fbd_response"] = ""
+    if "fbd_forces" not in st.session_state:
+        st.session_state["fbd_forces"] = []
     
     chat_input = st.chat_input("Don't know what forces are required? Ask!")
     response_list=[]
-    try:
-        if chat_input:
-            time.sleep(2)  # Wait for 2 seconds before making a new API call
+    example_forces = ["Tension", "Gravity", "Friction", "Applied Force", "Normal Force", "Air Resistance"]
+    if chat_input and chat_input != st.session_state['fbd_last_input']:
+        try:
+            time.sleep(2)
             response_1 = user.chat.completions.create(
                 model = 'gpt-4o',
                 messages=[{"role":"user", "content": "What forces are required for this problem:" +chat_input+"Please only state the forces and nothing else. Do not mention the reasoning as well, please state the forces in a list format"}] #sends the forces needed so user to adjust which forces are needed
             )
-            st.write(response_1["choices"][0]["message"]["content"])
-            response_list = list(response_1["choices"][0]["message"]["content"].split(", "))
-        example_forces = ["Tension", "Gravity", "Friction", "Applied Force", "Normal Force", "Air Resistance"]
-        if len(response_list)>0:
-            for force in response_list:
-                for f_1 in example_forces:
-                    if f_1 == force:
-                        draw_Forcearrow(f_1)
-            if st.button("Draw & Display"):
-                st.image("forces_diagram.png")
+            response_text = response_1["choices"][0]["message"]["content"]
+            st.session_state["fbd_response"] = response_text
+            st.session_state["fbd_last_input"] = chat_input
+            st.session_state["fbd_forces"] =[f.strip() for f in response_text.split(' ')]
+        except:
+            st.warning("An error occurred while processing your request. Please try again.")
+            st.stop()
+    
+    if st.session_state["fbd_response"]:
+        st.write(st.session_state["fbd_response"])
+            
+        
+        
+        for force in st.session_state["fbd_forces"]:
+            for f_1 in example_forces:
+                if f_1 == force:
+                    draw_Forcearrow(f_1)
+        if st.button("Draw & Display"):
+            st.image("forces_diagram.png")
                 
-            st.image("drawing.png", caption="Turtle Drawing", use_column_width=True)
-    except RateLimitError as e:
-        st.write("Rate limit exceeded.Please check your usage or upgrade your plan")
-
+        st.image("drawing.png", caption="Turtle Drawing", use_column_width=True)
+    
 
 #with the list of forces, if each force cheks with one of these, draw the forces then expoert them
 
@@ -373,7 +387,7 @@ elif sections == "Personal Quizzes":
     list_ofchoices = ["Newton's Laws", "Momentum", "Kinematics", "Work Energy and Power"]
     topic = st.selectbox("Choose a topic:", list(list_ofchoices))
     quiz_questions = {
-        "Newton's Laws": {
+        "Newton's Laws": [
             
             {"question": "What is Newton's First Law also known as?", "options": ["Law of Gravity", "Law of Inertia", "Law of Motion"], "answer": "Law of Inertia"},
             {"question": "Which force keeps planets in orbit?", "options": ["Friction", "Gravity", "Magnetism"], "answer": "Gravity"},
@@ -391,8 +405,8 @@ elif sections == "Personal Quizzes":
             {"question": "A 30 kg child on a sled experiences 60 N of friction. If pulled with 100 N, what's a?", "options": ["4/3", "2/3", "1/5", "0"], "answer": "4/3"},
             {"question": "A 500 N net force stops a 100 kg object from moving at 10 m/s. How long does it take?", "options": ["3", "55", "2", "44"], "answer": "2"},
             
-        },
-        "Momentum": {
+        ],
+        "Momentum": [
             
             {"question": "A 5 kg cat runs at 8 m/s. What its momentum?", "options": ["40", "35", "23"], "answer": "40"}, #changed
             {"question": "A 0.2 kg baseball has a momentum of 6 kg*m/s. What's its velocity", "options": ["30", "15", "45"], "answer": "30"}, #changed
@@ -409,9 +423,13 @@ elif sections == "Personal Quizzes":
             {"question": "A 70 kg runner's momentum is 490 kg*m/s. What's her velocity?", "options": ["7", "20.2", "9", "4"], "answer": "7"}, #changed
             {"question": "A 2 kg toy car moving at 3 m/s hits a 1 kg stationary car. If they stick, what's their final speed?", "options": ["4", "2", "1", "0"], "answer": "2"},
             {"question": "A 50 kg archer shoots a 0.1 kg arrow at 50 m/s. What's the archer's recoil speed?", "options": ["0.3", "0.1", "2", "4.4"], "answer": "0.1"},
+
+       
+
+
             
-        },
-        "Kinematics": {
+        ],
+        "Kinematics": [
             
             {"question": "Which of the following is a vector quantity?", "options": ["Speed", "Distance", "Velocity"], "answer": "Velocity"}, #changed
             {"question": "What does the slope of a velocity-time graph represent?", "options": ["Speed", "Acceleration", "45"], "answer": "Acceleration"}, #changed
@@ -429,8 +447,8 @@ elif sections == "Personal Quizzes":
             {"question": "If an object moves in uniform circular motion, its speed is:?", "options": ["Constant", "Increasing", "Decreasing", "0"], "answer": "Constant"},#changed
             {"question": "What happens to the acceleration of an object in free fall when air resistance is considered?", "options": ["It stays the same", "0", "It decreases over time", "It increases over time"], "answer": "It decreases over time"},
             
-        },
-        "Work Energy and Power": {
+        ],
+        "Work Energy and Power": [
             
             {"question": "What is the SI unit of work?", "options": ["Newton", "Joule", "Watt"], "answer": "Joule"}, #changed
             {"question": "Which of the following is an example of kinetic energy?", "options": ["A stretched rubber band", "A moving car", "A compressed spring"], "answer": "A moving car"}, #changed
@@ -448,48 +466,60 @@ elif sections == "Personal Quizzes":
             {"question": "Which of the following is NOT a form of mechanical energy?", "options": ["Kinetic Energy", "Potential Energy", "Thermal Energy", "Elastic Energy"], "answer": "Thermal Energy"}, #changed
             {"question": "A wind-powered generator converts wind energy into electrical energy. The electrical power output is proportional to:?", "options": ["Wind speed", "0", "Wind speed squared", "Wind speed cubed"], "answer": "Wind speed cubed"}, #changed
             
-        },
+        ],
     }
-    if "question_index" not in st.session_state:
+    if "quiz_topic" not in st.session_state or st.session_state["quiz_topic"] != topic:
+        st.session_state["quiz_topic"] = topic
         st.session_state["question_index"] = 0
-    if "score" not in st.session_state:
         st.session_state["score"] = 0
+        st.session_state["show_result"] = False
+        st.session_state["selected_answer"] = None
+
 
     selected_questions = quiz_questions.get(topic, {})
-    progress = (st.session_state["question_index"] / len(selected_questions)) * 100
-    st.progress(progress / 100)
-
-    correct = 0
-    if st.button("Open quiz!"):
-        if st.session_state["question_index"]<len(selected_questions):
+    total_questions = len(selected_questions)
+    progress = (st.session_state["question_index"] / total_questions) if total_questions else 0
+    
+    
+    
+   
+    if st.session_state["question_index"]< total_questions:
             
 
-            if selected_questions:
-                current_question = selected_questions[st.session_state["question_index"]]
-
             
-                st.subheader(f"Question {st.session_state['question_index'] + 1}: {current_question['question']}")
-                
-                
-                answer = st.radio("Choose your answer:", current_question["options"])
+        current_question = selected_questions[st.session_state["question_index"]]
 
-                if st.button("Sumbit"):
-                    if answer == _["answer"]:
-                        st.success("Correct!")
-                        correct+=1
-                        progress = (st.session_state)["question_index"] / (len(selected_questions)) * 100
-                        st.progress(progress/100)
+        st.subheader(f"Question {st.session_state['question_index'] + 1}: {current_question['question']}")
+        
+        selected_answer = st.radio("Choose your answer:", current_question["options"], index=None)
+        submit = st.button("Submit", key=f"submit_{st.session_state['question_index']}")
 
-                    else:
-                        st.error(f"Incorrect. The correct answer is {_['answer']}.")
-                    st.session_state["question_index"] += 1
-                    st.rerun()  # Refresh page to show the next question
-                    
-
+        
+        if submit:
+            if selected_answer == current_question["answer"]:
+                st.session_state["score"] += 1
+                st.success("✅ Correct!")
+                        
             else:
-                st.warning("No questions for this topic")
+                st.error(f"❌ Incorrect! The correct answer is {current_question['answer']}.")
+
+                    
+            st.session_state["selected_answer"] = selected_answer
+                    
+                    
+            st.session_state["question_index"] += 1
+                    
+                    
+            st.rerun()
+                    
+            
     else:
-       st.success(f"🎉 Quiz Completed! Your final score: {st.session_state['score']} / {len(selected_questions)}")
+        st.success(f"🎉 Quiz Completed! Your final score: {st.session_state['score']} / {len(selected_questions)}")
+
+    st.progress(progress)
+
+
+
  
    
 

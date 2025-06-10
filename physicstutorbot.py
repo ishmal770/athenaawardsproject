@@ -25,20 +25,13 @@ def draw_Forcearrow_matplot(forces_dict):
     
     
 
-    # Draw the force arrow
-    if force == "Friction":
-        dx, dy= (-1,0)
-        
-    elif force == "Applied Force":
-        dx, dy = (1,0)
-    elif force in ["Normal Force", "Air Resistance", "Tension"]:
-        dx,dy = (0,1)
-    elif force == "Gravity":
-        dx, dy = (0, -1)
+    directions = {"Friction": (-1, 0), "Applied Force": (1, 0), "Normal Force": (0, 1), "Air Resistance": (0, 1), "Tension": (0, 1), "Gravity": (0, -1)}
+    
     for force, mag in forces_dict.items():
+        dx,dy = directions.get(force, (0,0))
         arrow_length = mag/100*0.3 #scaled
         ax.arrow(0.5, 0.5, dx*arrow_length, dy*arrow_length, head_width=0.04, head_length=0.04, fc='red', ec='red', length_includes_head=True)
-        ax.text(0.5+dx(arrow_length+0.05), 0.5+dy*(arrow_length+0.05), f"{force}\n({mag} N)", fontsize=12, color='black', ha='center', va='center')
+        ax.text(0.5 + dx * (arrow_length + 0.05), 0.5 + dy * (arrow_length + 0.05), f"{force}\n({mag} N)", fontsize=12, color='black', ha='center', va='center')
     ax.set_xlim(0,1)
     ax.set_ylim(0,1)
     ax.axis('off')
@@ -65,7 +58,8 @@ with st.container(): #first section
     
     
 
-        st.markdown("<h1 style='color: #D3D3D3;'>Welcome to Physics TutorBot!</h1>", unsafe_allow_html=True)
+        st.markdown("<h1 style='color: #4A4A4A;'>Welcome to Physics TutorBot!</h1>", unsafe_allow_html=True)
+        
 
         st.subheader("Struggling with Newton’s laws or momentum problems? Meet Physics Tutor AI – the smart, interactive way to master physics!")
 
@@ -124,7 +118,7 @@ if sections == "Physics Tutoring":
         response = st.write_stream(stream)
         st.session_state.messages.append({"role": "assistant", "content": response})
 
-    suggestions = ["What is Newton's First Law?", "How to implement air-resistance in overall Net Force of these problems?", "How to calculate momentum with objects coliding?", "A 70 kg football player tackles an 90 kg player running toward him at 6 m/s. If they stic, what's their final velocity?"]
+    suggestions = ["What is Newton's First Law?", "How to implement air-resistance in overall Net Force of these problems?", "How to calculate momentum with objects colliding?", "A 70 kg football player tackles an 90 kg player running toward him at 6 m/s. If they stick, what's their final velocity?"]
     st.write("Suggested questions")
     for suggestion in suggestions:
         if st.button(suggestion):
@@ -159,6 +153,12 @@ elif sections == "Free-body Diagram Tutoring":
     normal_force = st.checkbox("Normal Force", value=False)
     friction = st.checkbox("Friction", value=False)
     st.write("Please choose the magnitude of the forces you selected")
+    
+
+
+    
+
+    
     if airresistance:
         
         airmag = st.slider("Air Resistance Magnitude (N)", min_value=0, max_value=100, value=50)
@@ -167,64 +167,32 @@ elif sections == "Free-body Diagram Tutoring":
     if tension:
         tensionmag = st.slider("Tension Magnitude (N)", min_value=0, max_value=100, value=50)
         forces_dict["Tension"] = tensionmag
-    elif gravity:
+    if gravity:
         gravitymag = st.slider("Gravity Magnitude (N)", min_value=0, max_value=100, value=50)
         forces_dict["Gravity"] = gravitymag
         
-    elif applied_force:
+    if applied_force:
         appliedforcemag = st.slider("Applied Force Magnitude (N)", min_value=0, max_value=100, value=50)
         forces_dict["Applied Force"] = appliedforcemag
-    elif normal_force:
+    if normal_force:
         normalforcemag = st.slider("Normal Force Magnitude (N)", min_value=0, max_value=100, value=50)
         forces_dict["Normal Force"] = normalforcemag
-    elif friction:
+    if friction:
         frictionmag = st.slider("Friction Magnitude (N)", min_value=0, max_value=100, value=50)
         forces_dict["Friction"] = frictionmag
     
     if forces_dict and st.button("Draw & Display"):
-        draw_Forcearrow_matplot(forces_dict)
-
-
-    """
-    if "fbd_last_input" not in st.session_state:
-        st.session_state["fbd_last_input"] = ""
-    if "fbd_response" not in st.session_state:
-        st.session_state["fbd_response"] = ""
-    if "fbd_forces" not in st.session_state:
-        st.session_state["fbd_forces"] = []
-    
-    chat_input = st.chat_input("Don't know what forces are required? Ask!")
-    response_list=[]
-    example_forces = ["Tension", "Gravity", "Friction", "Applied Force", "Normal Force", "Air Resistance"]
-    if chat_input and chat_input != st.session_state['fbd_last_input']:
-        try:
-            time.sleep(2)
-            response_1 = user.chat.completions.create(
-                model = 'gpt-4o',
-                messages=[{"role":"user", "content": "What forces are required for this problem:" +chat_input+"Please only state the forces and nothing else. Do not mention the reasoning as well, please state the forces in a list format"}] #sends the forces needed so user to adjust which forces are needed
-            )
-            response_text = response_1["choices"][0]["message"]["content"]
-            st.session_state["fbd_response"] = response_text
-            st.session_state["fbd_last_input"] = chat_input
-            st.session_state["fbd_forces"] =[f.strip() for f in response_text.split(' ')]
-        except:
-            st.warning("An error occurred while processing your request. Please try again.")
-            st.stop()
-    
-    if st.session_state["fbd_response"]:
-        st.write(st.session_state["fbd_response"])
-            
+        st.write("Please scroll down to see the Free Body Diagram")
         
-        
-        for force in st.session_state["fbd_forces"]:
-            for f_1 in example_forces:
-                if f_1 == force:
-                    draw_Forcearrow(f_1)
-        if st.button("Draw & Display"):
-            st.image("forces_diagram.png")
-                
-        st.image("drawing.png", caption="Turtle Drawing", use_column_width=True)
-    """
+        if forces_dict:
+            draw_Forcearrow_matplot(forces_dict)
+        else:
+            st.warning("Please select at least one force and set its magnitude.")
+    if st.button("Reset"):
+        forces_dict.clear()
+        st.write("All forces have been reset. Please select new forces and their magnitudes.")
+    
+
     
 
 #with the list of forces, if each force cheks with one of these, draw the forces then expoert them
@@ -449,10 +417,10 @@ elif sections == "Personal Quizzes":
             {"question": " If an object moves with constant acceleration, its velocity vs. time graph is:", "options": ["A curved line", "A horizontal line", "A diagonal straight line"], "answer": "A diagonal straight line"}, #changed
             
             
-            {"question": " A car accelerates from rest at 4 m/s² for 5 seconds. What is its final velocity?", "options": ["1", "2", "5"], "answer": "20"}, #changed
+            {"question": " A car accelerates from rest at 4 m/s² for 5 seconds. What is its final velocity?", "options": ["1", "20", "5"], "answer": "20"}, #changed
             {"question": "Which of the following statements is true about free-falling objects?", "options": ["They experience constant velocity", "They accelerate at 9.8 m/s² downward", "Their motion depends on their mass", "40"], "answer": "They accelerate at 9.8 m/s² downward"}, #changed 
             {"question": "The area under a velocity-time graph represents:", "options": ["Acceleration", "Distance traveled", "2", "3.3"], "answer": "Distance traveled"}, #changed
-            {"question": "Which of the following equations is NOT a kinematics equation?", "options": ["( v = u + at )", "( F = ma )", "v2 + 2as", "1000"], "answer": " F = ma"},#changed
+            {"question": "Which of the following equations is NOT a kinematics equation?", "options": ["( v = u + at )", "( F = ma )", "v2 + 2as"], "answer": " F = ma"},#changed
             {"question": "A projectile is launched at an angle. Its horizontal acceleration is:", "options": ["9.8", "6", "5", "4"], "answer": "9.8"}, #changed
             {"question": "A ball thrown straight up reaches its highest point. At that moment, its velocity is:?", "options": ["Maximum", "Zero", "Negative", "Constant"], "answer": "Zero"}, #changed
             {"question": "If an object moves in uniform circular motion, its speed is:?", "options": ["Constant", "Increasing", "Decreasing", "0"], "answer": "Constant"},#changed
@@ -536,6 +504,8 @@ elif sections == "Personal Quizzes":
 
 
 #my progress
+
+
 
 
 

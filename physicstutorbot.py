@@ -6,74 +6,48 @@ import turtle
 from PIL import Image
 import time
 from openai import RateLimitError
+import matplotlib.pyplot as plt
+import numpy as np
 
-def draw_Forcearrow(force): #drawign first the square then the arrow
-    screen = turtle.Screen()
-    screen.setup(width = 500, height=500)
-    screen.bgcolor("white")
-    t = turtle.Turtle()
-    t.speed(3)
-    t.color("blue")
-    t.goto(50,50)
-    for o in range(4):
-        t.forward(100)
-        
-        t.right(90)
-    t=turtle.Turtle() 
-    initlizae()
-    if force == "Friction":
-        t.backward(150)
-        
-        t.right(135)  # Rotate for arrowhead
-        t.forward(20)  # First part of arrowhead
-        t.backward(20)  # Return to line
-        t.left(90)  # Rotate for second part
-        t.forward(20)
-        
-        t.goto(50, 50)
-    if force == "Applied Force":
-        t.forward(150)
-        
-        t.right(135)  # Rotate for arrowhead
-        t.forward(20)  # First part of arrowhead
-        t.backward(20)  # Return to line
-        t.left(90)  # Rotate for second part
-        t.forward(20)
-        
-        t.goto(50, 50)
-    if force == "Normal Force" or force == "Air Resistance" or force == "Tension":
-        t.left(90)
-        t.forward(150)
-        
-        t.right(135)  # Rotate for arrowhead
-        t.forward(20)  # First part of arrowhead
-        t.backward(20)  # Return to line
-        t.left(90)  # Rotate for second part
-        t.forward(20)
-        
-        t.goto(50, 50)
-    if force == "Gravity":
-        t.right(90)
-        t.right(135)  # Rotate for arrowhead
-        t.forward(20)  # First part of arrowhead
-        t.backward(20)  # Return to line
-        t.left(90)  # Rotate for second part
-        t.forward(20)
-        
-        t.goto(50, 50)
-    return t
-def initlizae(): #sets turtle to the middle of the square
-    t = turtle.Turtle()
-    t.goto(50, 50)
-    return t
 
-def save_turtle_image():
+
+
+
+
+def draw_Forcearrow_matplot(forces_dict):
+    fig,ax = plt.subplots(figsize=(5, 5))
+    #draw square in center
+    square = plt.Rectangle((0.4,0.4),0.2,0.2, fill=None, edgecolor = 'blue', linewidth =3)
+    ax.add_patch(square)
+
     
-    ts = turtle.getscreen()
-    ts.getcanvas().postscript(file="forces_diagram.eps")
-    img = Image.open("forces_diagram.eps")
-    img.save("forces_diagram.png")
-    turtle.done()
+
+    
+    
+
+    # Draw the force arrow
+    if force == "Friction":
+        dx, dy= (-1,0)
+        
+    elif force == "Applied Force":
+        dx, dy = (1,0)
+    elif force in ["Normal Force", "Air Resistance", "Tension"]:
+        dx,dy = (0,1)
+    elif force == "Gravity":
+        dx, dy = (0, -1)
+    for force, mag in forces_dict.items():
+        arrow_length = mag/100*0.3 #scaled
+        ax.arrow(0.5, 0.5, dx*arrow_length, dy*arrow_length, head_width=0.04, head_length=0.04, fc='red', ec='red', length_includes_head=True)
+        ax.text(0.5+dx(arrow_length+0.05), 0.5+dy*(arrow_length+0.05), f"{force}\n({mag} N)", fontsize=12, color='black', ha='center', va='center')
+    ax.set_xlim(0,1)
+    ax.set_ylim(0,1)
+    ax.axis('off')
+    plt.tight_layout()
+    st.pyplot(fig)
+    #draw arrow
+    
+
+   
 
 
 
@@ -141,7 +115,7 @@ if sections == "Physics Tutoring":
         with st.chat_message("user"):
             st.markdown(prompt)
         with st.chat_message("assistant"):
-                time.sleep(2)  # Wait for 2 seconds before making a new API call
+                time.sleep(2)  #Wait for 2 seconds before making a new API call
                 stream = user.chat.completions.create(
                 model=st.session_state["openai_model"],
                 messages=[{"role": "user", "content": prompt}],
@@ -150,7 +124,7 @@ if sections == "Physics Tutoring":
         response = st.write_stream(stream)
         st.session_state.messages.append({"role": "assistant", "content": response})
 
-    suggestions = ["What is Newton's First Law?", "How to implment air-resistnace in overall Net Force of these problems?", "How to calculate momentum with objects coliding?", "A 70 kg football player tackles an 90 kg player running toward him at 6 m/s. If they stic, what's their final velocity?"]
+    suggestions = ["What is Newton's First Law?", "How to implement air-resistance in overall Net Force of these problems?", "How to calculate momentum with objects coliding?", "A 70 kg football player tackles an 90 kg player running toward him at 6 m/s. If they stic, what's their final velocity?"]
     st.write("Suggested questions")
     for suggestion in suggestions:
         if st.button(suggestion):
@@ -159,7 +133,7 @@ if sections == "Physics Tutoring":
             with st.chat_message("user"):
                 st.markdown(prompt)
             with st.chat_message("assistant"):
-                time.sleep(2)  # Wait for 2 seconds before making a new API call
+                time.sleep(2)  #Wait for 2 seconds before making a new API call
                 stream = user.chat.completions.create(
                 model=st.session_state["openai_model"],
                 messages=[{"role": "user", "content": prompt}],
@@ -174,8 +148,44 @@ if sections == "Physics Tutoring":
 
 elif sections == "Free-body Diagram Tutoring":
      #freebody diagram questions
+    forces_dict={}
     st.write("-----------")
     st.subheader("Got any Free Body Diagram issues? Allow us to assist you")
+    example_forces = ["Tension", "Gravity", "Friction", "Applied Force", "Normal Force", "Air Resistance"]
+    airresistance = st.checkbox("Air Resistance", value=False)
+    tension = st.checkbox("Tension", value=False)
+    gravity = st.checkbox("Gravity", value=False)
+    applied_force = st.checkbox("Applied Force", value=False)
+    normal_force = st.checkbox("Normal Force", value=False)
+    friction = st.checkbox("Friction", value=False)
+    st.write("Please choose the magnitude of the forces you selected")
+    if airresistance:
+        
+        airmag = st.slider("Air Resistance Magnitude (N)", min_value=0, max_value=100, value=50)
+        forces_dict["Air Resistance"] = airmag
+        
+    if tension:
+        tensionmag = st.slider("Tension Magnitude (N)", min_value=0, max_value=100, value=50)
+        forces_dict["Tension"] = tensionmag
+    elif gravity:
+        gravitymag = st.slider("Gravity Magnitude (N)", min_value=0, max_value=100, value=50)
+        forces_dict["Gravity"] = gravitymag
+        
+    elif applied_force:
+        appliedforcemag = st.slider("Applied Force Magnitude (N)", min_value=0, max_value=100, value=50)
+        forces_dict["Applied Force"] = appliedforcemag
+    elif normal_force:
+        normalforcemag = st.slider("Normal Force Magnitude (N)", min_value=0, max_value=100, value=50)
+        forces_dict["Normal Force"] = normalforcemag
+    elif friction:
+        frictionmag = st.slider("Friction Magnitude (N)", min_value=0, max_value=100, value=50)
+        forces_dict["Friction"] = frictionmag
+    
+    if forces_dict and st.button("Draw & Display"):
+        draw_Forcearrow_matplot(forces_dict)
+
+
+    """
     if "fbd_last_input" not in st.session_state:
         st.session_state["fbd_last_input"] = ""
     if "fbd_response" not in st.session_state:
@@ -214,6 +224,7 @@ elif sections == "Free-body Diagram Tutoring":
             st.image("forces_diagram.png")
                 
         st.image("drawing.png", caption="Turtle Drawing", use_column_width=True)
+    """
     
 
 #with the list of forces, if each force cheks with one of these, draw the forces then expoert them
@@ -527,5 +538,5 @@ elif sections == "Personal Quizzes":
 #my progress
 
 
-    
+
 

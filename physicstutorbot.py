@@ -1,8 +1,8 @@
 import streamlit as st
-from streamlit_scroll_navigation import scroll_navbar
-import openai
+
+
 from openai import OpenAI 
-import turtle
+
 from PIL import Image
 import time
 from openai import RateLimitError

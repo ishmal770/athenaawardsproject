@@ -109,12 +109,22 @@ if sections == "Physics Tutoring":
         with st.chat_message("user"):
             st.markdown(prompt)
         with st.chat_message("assistant"):
-                time.sleep(2)  #Wait for 2 seconds before making a new API call
+            time.sleep(2)  #Wait for 2 seconds before making a new API call
+            try:
                 stream = user.chat.completions.create(
                 model=st.session_state["openai_model"],
                 messages=[{"role": "user", "content": prompt}],
                 stream=True,
-            )
+                )
+                response = st.write_stream(stream)
+            except RateLimitError as e:
+                if "insufficient_quota" in str(e):
+                    st.error("Out of OpenAI credits — add billing at platform.openai.com")
+                else:
+                    st.warning("Too many requests, please wait and retry.")
+                st.stop()
+        st.session_state.messages.append({"role": "assistant", "content": response})
+                
         response = st.write_stream(stream)
         st.session_state.messages.append({"role": "assistant", "content": response})
 
@@ -128,11 +138,20 @@ if sections == "Physics Tutoring":
                 st.markdown(prompt)
             with st.chat_message("assistant"):
                 time.sleep(2)  #Wait for 2 seconds before making a new API call
-                stream = user.chat.completions.create(
-                model=st.session_state["openai_model"],
-                messages=[{"role": "user", "content": prompt}],
-                stream=True,
-            )
+                try:
+                    stream = user.chat.completions.create(
+                        model=st.session_state["openai_model"],
+                        messages=[{"role": "user", "content": prompt}],
+                        stream=True,
+                    )
+                    response = st.write_stream(stream)
+                except RateLimitError as e:
+                    if "insufficient_quota" in str(e):
+                        st.error("Out of OpenAI credits — add billing at platform.openai.com")
+                    else:
+                        st.warning("Too many requests, please wait and retry.")
+                    st.stop()
+            st.session_state.messages.append({"role": "assistant", "content": response})
             
                 
             response = st.write_stream(stream)

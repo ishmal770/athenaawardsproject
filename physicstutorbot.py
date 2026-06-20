@@ -90,7 +90,6 @@ with right_col:
 
 
 genai.configure(api_key=st.secrets["api_keys"]["gemini_key"])
-
 gemini_model = genai.GenerativeModel("gemini-2.0-flash")
 if sections == "Physics Tutoring":
     #basic chatbot
@@ -109,7 +108,7 @@ if sections == "Physics Tutoring":
         with st.chat_message("user"):
             st.markdown(prompt)
         with st.chat_message("assistant"):
-            time.sleep(2)  #Wait for 2 seconds before making a new API call
+              #Wait for 2 seconds before making a new API call
             try:
                 
                 gemini_response = gemini_model.generate_content(prompt)
@@ -132,7 +131,7 @@ if sections == "Physics Tutoring":
             with st.chat_message("user"):
                 st.markdown(prompt)
             with st.chat_message("assistant"):
-                time.sleep(2)  #Wait for 2 seconds before making a new API call
+                  #Wait for 2 seconds before making a new API call
                 try:
                    
                     gemini_response = gemini_model.generate_content(prompt)

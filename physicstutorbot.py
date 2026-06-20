@@ -1,11 +1,10 @@
 import streamlit as st
 
 
-from openai import OpenAI 
-
+import google.generativeai as genai
 from PIL import Image
 import time
-from openai import RateLimitError
+
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -90,15 +89,15 @@ with right_col:
 
 
 
-user = OpenAI(api_key=st.secrets["api_keys"]["openai_key"])
+genai.configure(api_key=st.secrets["api_keys"]["gemini_key"])
+gemini_model = genai.GenerativeModel("gemini-2.0-flash")
 if sections == "Physics Tutoring":
     #basic chatbot
     st.write("--------")
     st.subheader("Ask your issues! :tada:")
     
     
-    if "openai_model" not in st.session_state:
-        st.session_state["openai_model"] = "gpt-4o-mini"
+    
     if "messages" not in st.session_state:
         st.session_state.messages = []
     for message in st.session_state.messages:
@@ -109,14 +108,19 @@ if sections == "Physics Tutoring":
         with st.chat_message("user"):
             st.markdown(prompt)
         with st.chat_message("assistant"):
-                time.sleep(2)  #Wait for 2 seconds before making a new API call
-                stream = user.chat.completions.create(
-                model=st.session_state["openai_model"],
-                messages=[{"role": "user", "content": prompt}],
-                stream=True,
-            )
-        response = st.write_stream(stream)
+            time.sleep(2)  #Wait for 2 seconds before making a new API call
+            try:
+                
+                gemini_response = gemini_model.generate_content(prompt)
+                response = gemini_response.text
+                st.markdown(response)
+            except Exception as e:
+                st.error(f"Gemini error: {e}")
+                st.stop()
         st.session_state.messages.append({"role": "assistant", "content": response})
+        
+                
+
 
     suggestions = ["What is Newton's First Law?", "How to implement air-resistance in overall Net Force of these problems?", "How to calculate momentum with objects colliding?", "A 70 kg football player tackles an 90 kg player running toward him at 6 m/s. If they stick, what's their final velocity?"]
     st.write("Suggested questions")
@@ -128,15 +132,19 @@ if sections == "Physics Tutoring":
                 st.markdown(prompt)
             with st.chat_message("assistant"):
                 time.sleep(2)  #Wait for 2 seconds before making a new API call
-                stream = user.chat.completions.create(
-                model=st.session_state["openai_model"],
-                messages=[{"role": "user", "content": prompt}],
-                stream=True,
-            )
+                try:
+                   
+                    gemini_response = gemini_model.generate_content(prompt)
+                    response = gemini_response.text
+                    st.markdown(response)
+                except Exception as e:
+                    st.error(f"Gemini error: {e}")
+                    st.stop()
+            st.session_state.messages.append({"role": "assistant", "content": response})
+            
             
                 
-            response = st.write_stream(stream)
-            st.session_state.messages.append({"role": "assistant", "content": response})
+
 
         #give sugestion questions
 

@@ -90,9 +90,8 @@ with right_col:
 
 
 genai.configure(api_key=st.secrets["api_keys"]["gemini_key"])
-for m in genai.list_models():
-    st.write(m.name)
-gemini_model = genai.GenerativeModel("gemini-1.0-pro")
+
+gemini_model = genai.GenerativeModel("gemini-2.0-flash")
 if sections == "Physics Tutoring":
     #basic chatbot
     st.write("--------")

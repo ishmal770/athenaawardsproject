@@ -1,7 +1,7 @@
 import streamlit as st
 
 
-import google.generativeai as genai
+from groq import Groq
 from PIL import Image
 import time
 
@@ -65,7 +65,7 @@ with st.container(): #first section
         st.write("Explore interactive lessons, problem-solving techniques, and expert guidance")
 
 
-        import streamlit as st
+        
 
         page_bg_color = """
         <style>
@@ -88,9 +88,7 @@ with right_col:
 
 
 
-
-genai.configure(api_key=st.secrets["api_keys"]["gemini_key"])
-gemini_model = genai.GenerativeModel("gemini-2.0-flash")
+client = Groq(api_key=st.secrets["api_keys"]["groq_key"])
 if sections == "Physics Tutoring":
     #basic chatbot
     st.write("--------")
@@ -110,12 +108,12 @@ if sections == "Physics Tutoring":
         with st.chat_message("assistant"):
               #Wait for 2 seconds before making a new API call
             try:
+                groq_response = client.chat.completions.create( model="llama-3.3-70b-versatile", messages=[{"role": "user", "content": prompt}])
+                response = groq_response.choices[0].message.content
                 
-                gemini_response = gemini_model.generate_content(prompt)
-                response = gemini_response.text
                 st.markdown(response)
             except Exception as e:
-                st.error(f"Gemini error: {e}")
+                st.error(f"Groq error: {e}")
                 st.stop()
         st.session_state.messages.append({"role": "assistant", "content": response})
         
@@ -134,8 +132,10 @@ if sections == "Physics Tutoring":
                   #Wait for 2 seconds before making a new API call
                 try:
                    
-                    gemini_response = gemini_model.generate_content(prompt)
-                    response = gemini_response.text
+                    groq_response = client.chat.completions.create( model="llama-3.3-70b-versatile", messages=[{"role": "user", "content": prompt}])
+                    response = groq_response.choices[0].message.content
+                
+                
                     st.markdown(response)
                 except Exception as e:
                     st.error(f"Gemini error: {e}")
